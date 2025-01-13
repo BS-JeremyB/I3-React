@@ -19,3 +19,23 @@
         grid-area: c;
     }
 }
+
+.articleSkeleton {
+    div {
+        min-height: 1em;
+        background-color: pink;
+    }
+
+    div:nth-child(1) {
+        width: 10em;
+    }
+
+    div:nth-child(2) {
+        width: 5em;
+    }
+
+    div:nth-child(3) {
+        width: 100%;
+        min-height: 2em;
+    }
+}
