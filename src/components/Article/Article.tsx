@@ -1,3 +1,5 @@
+import style from './Article.module.scss';
+
 type ArticleProps = {
     title: string;
     date: Date;
@@ -14,12 +16,13 @@ const Article = ({ title, date, resume }: ArticleProps) => {
         year: (new Date().getFullYear() !== date.getFullYear()) ? 'numeric' : undefined
     });
 
-
     return (
-        <div>
+        <div className={style.article}>
             <h3>{title}</h3>
             <p>{isToday ? 'Aujourd\'hui' : renderDate}</p>
-            <p>{resume}</p>
+            <div className={style.content}>
+                {resume}
+            </div>
         </div>
     );
 };

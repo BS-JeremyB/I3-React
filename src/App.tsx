@@ -10,16 +10,18 @@ function App() {
         resume='Une veille article de 2020...'
         date={new Date(2020, 11, 30)}
         />
+        <br />
 
       <Article 
         title='Essai'
-        resume='Ceci est un test !!!'
+        resume='Lorem ipsum, dolor sit amet consectetur adipisicing elit. Vel quos praesentium eos. Quas quos eligendi hic velit minus atque, minima tenetur beatae praesentium suscipit error quaerat mollitia! Repudiandae, maxime voluptatum?'
         date={new Date(2025, 0, 2)}
         />
+        <br />
 
       <Article 
         title='Tout nouveau'
-        resume={'Cette article a été créer aujou\'hui !'}
+        resume={'Cette article a été créé aujourd\'hui !'}
         date={new Date(2025, 0, 13)}
         />
     </>

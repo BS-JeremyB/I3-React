@@ -1,0 +1,21 @@
+.article {
+    padding: 1ch;
+    box-shadow: 0.3em 0.3em 0.3em slategray;
+    border-radius: 1em;
+    background-color: aliceblue;
+
+    display: grid;
+    grid-template-columns: 1fr max-content;
+    gap: 0.5em;
+    grid-template-areas: 
+        "a b"
+        "c c";
+
+    h3, p {
+        margin: 0;
+    }
+    
+    .content {
+        grid-area: c;
+    }
+}
