@@ -10,22 +10,30 @@ const ArticleList = () => {
 
     const [articles, setArticles] = useState<ArticleResponseWP[]>([]);
     const [isLoading, setLoading] = useState(true);
+    const [page, setPage] = useState(1);
 
     useEffect(() => {
         let ignore = false;
-        fetchArticle(nbArticlePerRequest, 1)
+        fetchArticle(nbArticlePerRequest, page)
             .then((result) => {
-                if(ignore) {  return; }
+                if (ignore) { return; }
 
                 setArticles(articles => [...articles, ...result]);
                 setLoading(false);
-            })
-           
+            });
+
         return () => {
             // Stop state update on clean effect 
             ignore = true;
-        }
-    }, []);
+        };
+    }, [page]);
+
+    const handleLoadMore = () => {
+        if (isLoading) { return; }
+
+        setLoading(true);
+        setPage(page => page + 1);
+    };
 
     return (
         <div>
@@ -34,14 +42,17 @@ const ArticleList = () => {
                     title={article.title.rendered}
                     resume={article.excerpt.rendered}
                     date={new Date(article.date)}
-                    />
+                />
             ))}
-            { isLoading && (
+            {isLoading && (
                 <ArticleSkeleton />
             )}
-            {/* TODO Ajouter les boutons "Voir plus" */}
+            <button onClick={handleLoadMore}
+                    disabled={isLoading}>
+                Voir plus
+            </button>
         </div>
     );
-}
+};
 
 export default ArticleList;
