@@ -12,11 +12,19 @@ const ArticleList = () => {
     const [isLoading, setLoading] = useState(true);
 
     useEffect(() => {
+        let ignore = false;
         fetchArticle(nbArticlePerRequest, 1)
             .then((result) => {
+                if(ignore) {  return; }
+
                 setArticles(articles => [...articles, ...result]);
                 setLoading(false);
             })
+           
+        return () => {
+            // Stop state update on clean effect 
+            ignore = true;
+        }
     }, []);
 
     return (
