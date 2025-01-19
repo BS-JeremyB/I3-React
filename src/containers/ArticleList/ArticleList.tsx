@@ -3,6 +3,7 @@ import { fetchArticle } from '../../services/Article.service';
 import { ArticleResponseWP } from '../../types/Article';
 import Article from '../../components/Article/Article';
 import ArticleSkeleton from '../../components/Article/ArticleSkeleton';
+import style from './ArticleList.module.scss';
 
 const nbArticlePerRequest = 2;
 
@@ -41,7 +42,7 @@ const ArticleList = () => {
     };
 
     return (
-        <div>
+        <div className={style.articleList}>
             {articles.map(article => (
                 <Article key={article.id}
                     title={article.title.rendered}
@@ -52,11 +53,16 @@ const ArticleList = () => {
             {isLoading && (
                 <ArticleSkeleton />
             )}
-            {moreArticle && (
-                <button onClick={handleLoadMore}
+            {moreArticle ? (
+                <button className={style.btnLoad}
+                    onClick={handleLoadMore}
                     disabled={isLoading}>
                     Voir plus
                 </button>
+            ) : (
+                <p className={style.allLoaded}>
+                    Tout les articles ont été chargé
+                </p>
             )}
         </div>
     );

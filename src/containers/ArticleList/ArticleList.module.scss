@@ -1,0 +1,18 @@
+.articleList {
+  display: flex;
+  flex-direction: column;
+  gap: 1em;
+}
+
+.btnLoad {
+  background: transparent;
+  padding: 0.5ch;
+  border-radius: 1ch;
+}
+
+.allLoaded {
+  text-align: center;
+  color: gray;
+  font-style: italic;
+  margin: 0;
+}
