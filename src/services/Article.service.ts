@@ -13,6 +13,9 @@ export async function fetchArticle(nbElement : number, page = 1) : Promise<Artic
     //! IL NE VERIFIE PAS que le typage soit respecté à l'execution
     const result : ArticleResponseWP[] = await response.json();
 
+    //! [ONLY FOR DEV] Add latence on request
+    await (new Promise(resolve => setTimeout(resolve, 500)));
+
     return result;
 
 
