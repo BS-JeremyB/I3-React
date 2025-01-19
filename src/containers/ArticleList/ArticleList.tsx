@@ -1,6 +1,8 @@
 import { useEffect, useState } from 'react';
 import { fetchArticle } from '../../services/Article.service';
 import { ArticleResponseWP } from '../../types/Article';
+import Article from '../../components/Article/Article';
+import ArticleSkeleton from '../../components/Article/ArticleSkeleton';
 
 const nbArticlePerRequest = 2;
 
@@ -19,8 +21,16 @@ const ArticleList = () => {
 
     return (
         <div>
-            {/* TODO Affiche la liste des articles */}
-            {/* TODO Affiche un ArticleSkeleton si le loading est "true" */}
+            {articles.map(article => (
+                <Article key={article.id}
+                    title={article.title.rendered}
+                    resume={article.excerpt.rendered}
+                    date={new Date(article.date)}
+                    />
+            ))}
+            { isLoading && (
+                <ArticleSkeleton />
+            )}
             {/* TODO Ajouter les boutons "Voir plus" */}
         </div>
     );
