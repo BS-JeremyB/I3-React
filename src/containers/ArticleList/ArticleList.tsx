@@ -11,6 +11,7 @@ const ArticleList = () => {
     const [articles, setArticles] = useState<ArticleResponseWP[]>([]);
     const [isLoading, setLoading] = useState(true);
     const [page, setPage] = useState(1);
+    const [moreArticle, setMoreArticle] = useState(true);
 
     useEffect(() => {
         let ignore = false;
@@ -20,6 +21,10 @@ const ArticleList = () => {
 
                 setArticles(articles => [...articles, ...result]);
                 setLoading(false);
+
+                if (result.length < nbArticlePerRequest) {
+                    setMoreArticle(false);
+                }
             });
 
         return () => {
@@ -47,10 +52,12 @@ const ArticleList = () => {
             {isLoading && (
                 <ArticleSkeleton />
             )}
-            <button onClick={handleLoadMore}
+            {moreArticle && (
+                <button onClick={handleLoadMore}
                     disabled={isLoading}>
-                Voir plus
-            </button>
+                    Voir plus
+                </button>
+            )}
         </div>
     );
 };
