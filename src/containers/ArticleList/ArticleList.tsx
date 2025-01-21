@@ -8,11 +8,11 @@ import style from './ArticleList.module.scss';
 const nbArticlePerRequest = 2;
 
 const ArticleList = () => {
-
     const [articles, setArticles] = useState<ArticleResponseWP[]>([]);
     const [isLoading, setLoading] = useState(true);
     const [page, setPage] = useState(1);
     const [moreArticle, setMoreArticle] = useState(true);
+    const [totalArticles, setTotalArticles] = useState(0);
 
     useEffect(() => {
         let ignore = false;
@@ -20,24 +20,31 @@ const ArticleList = () => {
             .then((result) => {
                 if (ignore) { return; }
 
-                setArticles(articles => [...articles, ...result]);
-                setLoading(false);
-
-                if (result.length < nbArticlePerRequest) {
+                if (result.data.length < nbArticlePerRequest) {
                     setMoreArticle(false);
                 }
+
+                setArticles(articles => [...articles, ...result.data]);
+                setLoading(false);
+                setTotalArticles(result.total);
             });
 
         return () => {
-            // Stop state update on clean effect 
             ignore = true;
         };
     }, [page]);
 
     const handleLoadMore = () => {
         if (isLoading) { return; }
-
         setLoading(true);
+
+        const totalPages = Math.ceil(totalArticles / nbArticlePerRequest);
+
+        if((page+1) > totalPages){
+            setMoreArticle(false);
+            setLoading(false);
+            return;
+        }
         setPage(page => page + 1);
     };
 
@@ -61,7 +68,7 @@ const ArticleList = () => {
                 </button>
             ) : (
                 <p className={style.allLoaded}>
-                    Tout les articles ont été chargé
+                    Tous les articles ont été chargés
                 </p>
             )}
         </div>

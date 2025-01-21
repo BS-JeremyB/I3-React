@@ -4,19 +4,21 @@ import type { ArticleResponseWP, ArticleRequestWP } from '../types/Article';
 
 const { VITE_URL_WP } = import.meta.env;
 
-export async function fetchArticle(nbElement : number, page = 1) : Promise<ArticleResponseWP[]> {
+export async function fetchArticle(nbElement : number, page = 1)  {
 
     const response = await fetch(VITE_URL_WP + `wp-json/wp/v2/posts?page=${page}&per_page=${nbElement}`);
+    
 
     //! Le type réaliser ici est valable uniquement pour le dev
     //! C'est un type statique pour vous aider dans la création du code
     //! IL NE VERIFIE PAS que le typage soit respecté à l'execution
-    const result : ArticleResponseWP[] = await response.json();
+    const total = parseInt(response.headers.get('x-wp-total') || '0');
+    const data : ArticleResponseWP[] = await response.json();
 
     //! [ONLY FOR DEV] Add latence on request
     await (new Promise(resolve => setTimeout(resolve, 500)));
 
-    return result;
+    return {total, data};
 
 
     //? Equivalent avec Axios
